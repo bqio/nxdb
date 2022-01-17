@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NXDB</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    async function start() {
+      const response = await fetch('https://api.github.com/repos/bqio/nxdb/git/trees/main');
+      const json = await response.json();
+
+      for (let tr of json.tree) {
+        if (tr.path != 'README.md' && tr.path != 'index.html') {
+          let a = document.createElement('a');
+          a.href = 'https://bqio.github.io/nxdb/' + tr.path;
+          a.innerText = tr.path;
+          document.body.appendChild(a);
+        }
+      }
+    }
+    start()
+  </script>
+</body>
+</html>
