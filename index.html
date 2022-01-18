@@ -46,7 +46,7 @@
             <a :href="title.magnet">
               <div class="card">
                 <img
-                  :src="title.high_art"
+                  :src="optimizeImage(title.high_art)"
                   class="card-img"
                   alt=""
                   onerror="onImgErrorSmall(this)"
@@ -86,6 +86,9 @@
         methods: {
           next() {
             this.ofs += 48;
+          },
+          optimizeImage(url) {
+            return url.replace("/0/0/", "/640/360/");
           },
         },
         computed: {
