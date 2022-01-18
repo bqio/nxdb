@@ -39,6 +39,25 @@
   <body>
     <div id="app">
       <div class="container my-4">
+        <div class="row">
+          <div class="col-6">
+            <input
+              type="button"
+              class="btn btn-primary w-100 mb-3"
+              value="Previous"
+              :disabled="ofs == 0"
+              @click="prev"
+            />
+          </div>
+          <div class="col-6">
+            <input
+              type="button"
+              class="btn btn-primary w-100"
+              value="Next"
+              @click="next"
+            />
+          </div>
+        </div>
         <div
           class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4"
         >
@@ -52,7 +71,9 @@
                   onerror="onImgErrorSmall(this)"
                 />
                 <div class="card-body">
-                  <p class="card-title none">{{ title.files[0].title }}</p>
+                  <p class="card-title none">
+                    {{ decode(title.files[0].title) }}
+                  </p>
                   <p class="card-text">
                     <small class="text-muted">{{ title.files[0].uid }}</small>
                   </p>
@@ -83,11 +104,11 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.min.js"></script>
     <script>
       function onImgErrorSmall(source) {
         source.src =
           "http://u.kanobu.ru/editor/images/68/3b613ae5-43cd-46fe-993c-665bac63a485.png";
-        source.onerror = "";
         return true;
       }
       new Vue({
@@ -116,6 +137,9 @@
           optimizeImage(url) {
             return url.replace("/0/0/", "/320/180/");
           },
+          decode(text) {
+            return he.decode(text);
+          },
         },
         computed: {
           titles() {
@@ -136,6 +160,11 @@
           );
           const json = await response.json();
           this.all = json.titles;
+          window.onhashchange = () => {
+            this.ofs = parseInt(
+              window.location.hash.substring(1, window.location.hash.length)
+            );
+          };
         },
       });
     </script>
