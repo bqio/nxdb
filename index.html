@@ -38,12 +38,12 @@
   </head>
   <body>
     <div id="app">
-      <div class="container my-4">
-        <div class="row">
+      <div class="container-fluid my-3">
+        <div class="row mb-3 g-3">
           <div class="col-6">
             <input
               type="button"
-              class="btn btn-primary w-100 mb-3"
+              class="btn btn-primary w-100"
               value="Previous"
               :disabled="ofs == 0"
               @click="prev"
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div
-          class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4"
+          class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-3 mb-3"
         >
           <div class="col" v-for="title of titles">
             <a :href="title.magnet">
@@ -82,11 +82,11 @@
             </a>
           </div>
         </div>
-        <div class="row">
+        <div class="row g-3">
           <div class="col-6">
             <input
               type="button"
-              class="btn btn-primary w-100 mb-3"
+              class="btn btn-primary w-100"
               value="Previous"
               :disabled="ofs == 0"
               @click="prev"
