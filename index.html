@@ -61,12 +61,25 @@
             </a>
           </div>
         </div>
-        <input
-          type="button"
-          class="btn btn-primary w-100"
-          value="Next"
-          @click="next"
-        />
+        <div class="row">
+          <div class="col-6">
+            <input
+              type="button"
+              class="btn btn-primary w-100 mb-3"
+              value="Previous"
+              :disabled="ofs == 0"
+              @click="prev"
+            />
+          </div>
+          <div class="col-6">
+            <input
+              type="button"
+              class="btn btn-primary w-100"
+              value="Next"
+              @click="next"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
@@ -81,11 +94,24 @@
         el: "#app",
         data: {
           all: [],
-          ofs: 48,
+          ofs: 0,
         },
         methods: {
+          prev() {
+            this.ofs -= 48;
+            window.location.hash = "#" + this.ofs;
+            window.scrollTo({
+              top: 0,
+              behavior: "instant",
+            });
+          },
           next() {
             this.ofs += 48;
+            window.location.hash = "#" + this.ofs;
+            window.scrollTo({
+              top: 0,
+              behavior: "instant",
+            });
           },
           optimizeImage(url) {
             return url.replace("/0/0/", "/320/180/");
@@ -93,10 +119,18 @@
         },
         computed: {
           titles() {
-            return this.all.slice(0, this.ofs);
+            return this.all.slice(this.ofs, this.ofs + 48);
           },
         },
         async mounted() {
+          if (window.location.hash === "") {
+            window.location.hash = "#" + this.ofs;
+          } else {
+            this.ofs = parseInt(
+              window.location.hash.substring(1, window.location.hash.length)
+            );
+          }
+
           const response = await fetch(
             "https://raw.githubusercontent.com/bqio/nxdb/main/nxdb1642450449771.json"
           );
