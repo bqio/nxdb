@@ -21,12 +21,21 @@
         body {
             background-color: #f1f1f1;
         }
+        .card {
+            border: none !important;
+            box-shadow: 1px 1px 3px #ddd;
+        }
+
+        .card-img {
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <div class="container my-4">
-            <div class="row row-cols-sm-1 row-cols-1 row-cols-md-4 g-4 mb-4">
+            <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
                 <div class="col" v-for="title of titles">
                     <a :href="title.magnet">
                         <div class="card">
